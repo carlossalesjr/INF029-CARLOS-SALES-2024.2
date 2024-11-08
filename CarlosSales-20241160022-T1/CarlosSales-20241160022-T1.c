@@ -190,9 +190,15 @@ int q4(char *strTexto, char *strBusca, int posicoes[30])
 
 int q5(int num)
 {
+    int invertido = 0;
 
-    return num;
-}
+    while (num != 0){
+        invertido = invertido * 10 + num % 10;
+        num /= 10;
+    }
+    printf("|%d|", invertido);
+    return invertido;
+} 
 
 /*
  Q6 = ocorrência de um número em outro
