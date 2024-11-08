@@ -127,9 +127,33 @@ DiasMesesAnos q2(char datainicial[], char datafinal[])
  */
 int q3(char *texto, char c, int isCaseSensitive)
 {
-    int qtdOcorrencias = -1;
+    int jcont;
+    int qtdOcorrencias = 0;
+
+    if (isCaseSensitive != 1){
+        if (c >= 'a' && c <= 'z'){
+           c = c - 32; 
+        }
+        toUpper(texto);
+    }
+
+    for (jcont = 0; texto[jcont]; jcont++){
+        if(c == texto[jcont])
+        qtdOcorrencias++;
+    }
+    printf("|%d|", qtdOcorrencias);
 
     return qtdOcorrencias;
+}
+
+void toUpper(char *texto)
+{
+    int icont;
+    int upper = 32;
+    for (icont = 0; texto[icont] != '\0'; icont++){
+        if (texto[icont] >= 'a' && texto[icont] <= 'z')
+        texto[icont] = texto[icont] - upper;
+    }
 }
 
 /*
