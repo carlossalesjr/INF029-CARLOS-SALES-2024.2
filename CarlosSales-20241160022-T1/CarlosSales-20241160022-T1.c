@@ -196,8 +196,8 @@ int q5(int num)
         invertido = invertido * 10 + num % 10;
         num /= 10;
     }
-    printf("|%d|", invertido);
-    return invertido;
+    num = invertido;
+    return num;
 } 
 
 /*
