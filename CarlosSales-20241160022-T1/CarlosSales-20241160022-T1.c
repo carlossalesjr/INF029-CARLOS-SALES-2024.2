@@ -67,7 +67,6 @@ int q1(char data[])
     else if (dataquebrada.iDia > 31)
     datavalida = 0;
 
-    
     if (datavalida)
         return 1;
     else
