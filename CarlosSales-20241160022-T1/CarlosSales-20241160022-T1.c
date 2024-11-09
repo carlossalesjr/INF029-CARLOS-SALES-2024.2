@@ -129,30 +129,33 @@ int q3(char *texto, char c, int isCaseSensitive)
 {
     int jcont;
     int qtdOcorrencias = 0;
+    char copia[255];
+    
+    for (jcont = 0; texto[jcont] != '\0'; jcont++)
+        copia[jcont] = texto[jcont];
 
-    if (isCaseSensitive != 1){
+    if (!isCaseSensitive){
         if (c >= 'a' && c <= 'z'){
-           c = c - 32; 
+           c = c - ' '; 
         }
-        toUpper(texto);
+        toUpper(copia);
     }
 
-    for (jcont = 0; texto[jcont]; jcont++){
-        if(c == texto[jcont])
+    for (jcont = 0; copia[jcont]; jcont++){
+        if(c == copia[jcont])
         qtdOcorrencias++;
     }
-    printf("|%d|", qtdOcorrencias);
 
     return qtdOcorrencias;
 }
 
-void toUpper(char *texto)
+void toUpper(char *copia)
 {
     int icont;
     int upper = 32;
-    for (icont = 0; texto[icont] != '\0'; icont++){
-        if (texto[icont] >= 'a' && texto[icont] <= 'z')
-        texto[icont] = texto[icont] - upper;
+    for (icont = 0; copia[icont] != '\0'; icont++){
+        if (copia[icont] >= 'a' && copia[icont] <= 'z')
+        copia[icont] = copia[icont] - upper;
     }
 }
 
