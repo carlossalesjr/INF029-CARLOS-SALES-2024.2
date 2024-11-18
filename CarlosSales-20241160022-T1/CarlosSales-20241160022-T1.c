@@ -25,6 +25,7 @@
 #include "CarlosSales-20241160022-T1.h" // Substitua pelo seu arquivo de header renomeado
 #include <stdlib.h>
 #include <stdbool.h>
+#include <string.h>
 
 DataQuebrada quebraData(char data[]);
 
@@ -103,17 +104,43 @@ DiasMesesAnos q2(char datainicial[], char datafinal[])
       return dma;
     }else{
       //verifique se a data final não é menor que a data inicial
-      
-      //calcule a distancia entre as datas
+        DataQuebrada inicial, final;
+        inicial = quebraData(datainicial);
+        final = quebraData(datafinal);
+        bool bissexto;
+        int diasMes[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
+        if (final.iAno < inicial.iAno || (final.iAno == inicial.iAno && final.iMes < inicial.iMes) || 
+        (final.iAno == inicial.iAno && final.iMes == inicial.iMes && final.iDia < inicial.iDia)){
+            dma.retorno = 4;
+            return dma;
+        }
+        
+        //calcule a distancia entre as datas
+        if (final.iAno % 400 == 0 || (final.iAno % 4 == 0 && final.iAno % 100 != 0))
+        bissexto = true;
 
-      //se tudo der certo
-      dma.retorno = 1;
-      return dma;
-      
-    }
-    
-}
+        if(bissexto)
+        diasMes[1] = 29;
+
+        dma.qtdAnos = final.iAno - inicial.iAno;
+        dma.qtdMeses = final.iMes - inicial.iMes;
+        dma.qtdDias = final.iDia - inicial.iDia;
+
+        if (dma.qtdMeses < 0){
+            dma.qtdAnos--;
+            dma.qtdMeses += 12;
+        }
+        if (dma.qtdDias < 0){
+            dma.qtdMeses--;
+            dma.qtdDias += diasMes[final.iMes - 2];    
+        }
+        //se tudo der certo
+        dma.retorno = 1;
+        return dma;
+        
+        }
+    }    
 
 /*
  Q3 = encontrar caracter em texto
@@ -136,7 +163,7 @@ int q3(char *texto, char c, int isCaseSensitive)
 
     if (!isCaseSensitive){
         if (c >= 'a' && c <= 'z'){
-           c = c - ' '; 
+           c = c - 32; 
         }
         toUpper(copia);
     }
@@ -167,7 +194,12 @@ void toUpper(char *copia)
     uma string texto base (strTexto), uma string strBusca e um vetor de inteiros (posicoes) que irá guardar as posições de início e fim de cada ocorrência da palavra (strBusca) no texto base (texto).
  @saida
     Um número n >= 0 correspondente a quantidade de ocorrências encontradas.
-    O vetor posicoes deve ser preenchido com cada entrada e saída correspondente. Por exemplo, se tiver uma única ocorrência, a posição 0 do vetor deve ser preenchido com o índice de início do texto, e na posição 1, deve ser preenchido com o índice de fim da ocorrencias. Se tiver duas ocorrências, a segunda ocorrência será amazenado nas posições 2 e 3, e assim consecutivamente. Suponha a string "Instituto Federal da Bahia", e palavra de busca "dera". Como há uma ocorrência da palavra de busca no texto, deve-se armazenar no vetor, da seguinte forma:
+    O vetor posicoes deve ser preenchido com cada entrada e saída correspondente. 
+    Por exemplo, se tiver uma única ocorrência, a posição 0 do vetor deve ser preenchido com o índice de início do texto, 
+    e na posição 1, deve ser preenchido com o índice de fim da ocorrencias. 
+    Se tiver duas ocorrências, a segunda ocorrência será amazenado nas posições 2 e 3, e assim consecutivamente. 
+    Suponha a string "Instituto Federal da Bahia", e palavra de busca "dera".
+     Como há uma ocorrência da palavra de busca no texto, deve-se armazenar no vetor, da seguinte forma:
         posicoes[0] = 13;
         posicoes[1] = 16;
         Observe que o índice da posição no texto deve começar ser contado a partir de 1.
@@ -176,8 +208,8 @@ void toUpper(char *copia)
  */
 int q4(char *strTexto, char *strBusca, int posicoes[30])
 {
-    int qtdOcorrencias = -1;
-
+    int qtdOcorrencias = 0;
+    
     return qtdOcorrencias;
 }
 
@@ -215,7 +247,21 @@ int q5(int num)
 
 int q6(int numerobase, int numerobusca)
 {
-    int qtdOcorrencias;
+    int qtdOcorrencias = 0;
+    int divisor = 1;
+
+    while (numerobusca/divisor != 0)
+    divisor *= 10;
+
+    while(numerobase != 0){
+        if (numerobase%divisor == numerobusca){
+            qtdOcorrencias++;
+            numerobase /= divisor;
+        } else
+            numerobase /= 10;
+    }
+
+
     return qtdOcorrencias;
 }
 
