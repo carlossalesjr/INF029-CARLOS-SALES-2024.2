@@ -208,11 +208,34 @@ void toUpper(char *copia)
  */
 int q4(char *strTexto, char *strBusca, int posicoes[30])
 {
-    int qtdOcorrencias = 0;
-    
+   int qtdOcorrencias = 0;
+    int pos = 0;
+    int i, j;
+
+    int lenTexto = strlen(strTexto);
+    int lenBusca = strlen(strBusca);
+
+    for (i = 0; i <= lenTexto - lenBusca; i++) {
+        int achou = 1;
+        for (j = 0; j < lenBusca; j++) {
+            if (strTexto[i + j] == -61) { 
+                i++;
+            }
+            if (strTexto[i + j] != strBusca[j]) {
+                achou = 0;
+                break;
+            }
+        }
+        if (achou) {
+            qtdOcorrencias++;
+            posicoes[pos++] = i + 1;
+            posicoes[pos++] = i + lenBusca;
+            i += lenBusca - 1;
+        }
+    }
+
     return qtdOcorrencias;
 }
-
 /*
  Q5 = inverte número
  @objetivo
